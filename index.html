@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Jantar de Gala YME</title>
+		<link rel="icon" href="http://www.yme.pt/img/about/yme.png">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<style>
+			body{
+				background-color: white;
+				font-family: Verdana;
+			}
+			form{
+				text-align: center
+			}
+			h1, h2 {
+				padding-left:25%;
+				padding-right:25%;
+				text-align: center;
+				color: #67b8f7;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<!-- ->
+		<button onclick="setTimeout(talkStraight, 50);"></button>
+		<!- -->
+
+		<br><br><br><br>
+
+		<div style="height:">
+			<h1 id="pedido">Queres ser o meu par?</h1>
+			<br>
+		</div>
+
+		<br><br><br>
+
+		<div>
+			<form id="form" method="POST" action="https://eq8ilz8ad4qc.runscope.net" target="_blank">
+				<input type="hidden" name="resposta" value="SIM, EU VOU CONTIGO">
+				<input id="yes" type="submit" class="btn btn-success" value="Sim" style="font-size:40px;">
+
+				<br><br>
+				
+				<input id="no" type="button" class="btn btn-danger" value="Não" onmouseover="eliminate(this)" onclick="eliminate(this)">
+			</form>
+		</div>
+
+		<br>
+		<h2 id="reload" title="Repetir"></h2>
+
+		<script>
+			var i = 0;
+			var timeout1 = 35;
+			var timeout2 = 1000;
+			var blink_active = false;
+			var animation_active = true;
+			var text1 = 'Mulher, queres ser o meu par?';
+			var text2 = 'E se eu falar ao contrário, queres? ';
+			var text3 = 'Vou perguntar mais devagar...';
+
+			function talkStraight() {
+				if (animation_active==true){
+					if (i <= text1.length){
+						var pedido = document.getElementById("pedido");
+						pedido.innerHTML = text1.slice(0, i++);
+						var size = (i*2+20).toString();
+						pedido.style.fontSize = size + "px";
+						//document.write(text1[i++]);
+				   		setTimeout(talkStraight, timeout1);
+					}
+					else {
+						i=text2.length-1;
+						setTimeout(talkBackwards, timeout2);
+					}
+				}
+			}
+
+			function talkBackwards() {
+				if (animation_active==true){
+					if (i >= 0){
+						var pedido = document.getElementById("pedido");
+						pedido.innerHTML = text2.slice(i--, text2.length-1);
+						var size = (2*i+40).toString();
+						pedido.style.fontSize = size + "px";
+						//document.write(text2[i++]);
+				   		setTimeout(talkBackwards, timeout1);
+					}
+					else {
+						i = 0;
+						setTimeout(talkSlow, timeout2);
+					}
+				}
+			}
+
+			function talkSlow() {
+				if (animation_active==true){
+					if (i <= text3.length){
+						var pedido = document.getElementById("pedido");
+
+						pedido.style.fontSize = "40px";
+
+						pedido.innerHTML = text3.slice(0, i++);
+						//var size = (i*2).toString();
+						//pedido.style.fontSize = size + "px";
+						//document.write(text3[i++]);
+				   		setTimeout(talkSlow, 50);
+					}
+					else {
+						i=0;
+						setTimeout(talkSlow2, timeout2);
+					}
+				}
+			}
+
+			function talkSlow2() {
+				var j;
+				if (animation_active==true){
+					if (i <= text1.length){
+						var pedido = document.getElementById("pedido");
+
+						pedido.style.fontSize = "78px";
+						
+						for (j = i; j<text1.length; j++){
+							if (text1[j]==' ') break;
+						}
+
+						pedido.innerHTML = text1.slice(0, j);
+						i=j+1;
+						//var size = (i*2).toString();
+						//pedido.style.fontSize = size + "px";
+						//document.write(text[i++]);
+				   		setTimeout(talkSlow2, 500);
+					}
+					else {
+						i=0;
+						//setTimeout(talkStraight, timeout2);
+
+						var reload = document.getElementById("reload");
+						reload.innerHTML = '<span class="glyphicon glyphicon-repeat" style="cursor:pointer" onclick="i = 0; blink_active = false; talkStraight();"></span>';
+						blink_active = true;
+						blink();
+					}
+				}
+			}
+
+			function eliminate(element){
+				element.parentNode.removeChild(element);
+				document.getElementById("yes").style='font-size:100px';
+				/*
+				var button = document.createElement("input"); 
+				var button_value = document.createTextNode("Não");
+    			button.appendChild(t);
+				document.getElementById("form").appendChild(button);
+				*/
+				//document.getElementById("yes").style='font-size:100px';
+			}
+
+			function blink(){
+				element = document.getElementById("yes");
+				if (blink_active){
+					if (element.style.color=='white'){
+						element.style.color='#5cb85c';
+						setTimeout(blink, 100);
+					}
+					else{
+						element.value="Sim";
+						element.style.color='white';
+						setTimeout(blink, 400);
+					}
+				}
+			}
+
+
+			setTimeout(talkStraight, 100);
+
+		</script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+			   var $form = $('form');
+			   $form.submit(function(){
+			      $.post($(this).attr('action'), $(this).serialize(), function(response){
+
+			      		animation_active = false;
+
+			            var pedido = document.getElementById("pedido");
+			            pedido.innerHTML='Boa escolha!';
+
+			            var reload = document.getElementById("reload");
+			            var yes = document.getElementById("yes");
+			            var no = document.getElementById("no");
+
+			            reload.parentNode.removeChild(reload);
+			            yes.parentNode.removeChild(yes);
+			            no.parentNode.removeChild(no);
+
+			      },'json');
+			      return false;
+			   });
+			});
+		</script>
+	</body>
+</html>

@@ -37,9 +37,9 @@
 		<br><br><br>
 
 		<div>
-			<form id="form" method="POST" action="https://eq8ilz8ad4qc.runscope.net" target="_blank">
+			<form id="form" target="_blank">
 				<input type="hidden" name="resposta" value="SIM, EU VOU CONTIGO">
-				<input id="yes" type="submit" class="btn btn-success" value="Sim" style="font-size:40px;">
+				<input id="yes" type="submit" class="btn btn-success" value="Sim" style="font-size:40px;" onclick="end()">
 
 				<br><br>
 				
@@ -172,6 +172,21 @@
 				}
 			}
 
+			function end(){
+				animation_active = false;
+
+	            var pedido = document.getElementById("pedido");
+	            pedido.innerHTML='Boa escolha!';
+
+	            var reload = document.getElementById("reload");
+	            var yes = document.getElementById("yes");
+	            var no = document.getElementById("no");
+
+	            reload.parentNode.removeChild(reload);
+	            yes.parentNode.removeChild(yes);
+	            no.parentNode.removeChild(no);
+			}
+
 
 			setTimeout(talkStraight, 100);
 
@@ -181,6 +196,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<script type="text/javascript">
+			/*
 			$(document).ready(function(){
 			   var $form = $('form');
 			   $form.submit(function(){
@@ -203,6 +219,7 @@
 			      return false;
 			   });
 			});
+			*/
 		</script>
 	</body>
 </html>
